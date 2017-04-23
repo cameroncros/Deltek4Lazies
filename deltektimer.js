@@ -70,7 +70,7 @@ function stopCurrentTimer()
 
 function roundDecimal(val)
 {
-    return Math.ceil((val/60) * 10) / 10;
+    return Math.ceil(val * 10) / 10;
 }
     
 function cancelTimers()
