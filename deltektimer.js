@@ -58,13 +58,10 @@ function stopCurrentTimer()
     }
     var startTime = window.localStorage.getItem("startTime")
     var timeDiff = d.getTime()-startTime;
-    var hours = timeDiff / (60 * 60 * 1000);
-    var minutes = (timeDiff % (60 * 60 * 1000))/ (60 * 1000);
-    var deltekMinutes = roundDecimal(minutes);
-    var timeDeltekDelta = hours + deltekMinutes;
+    var hours = roundDecimal(timeDiff / (60 * 60 * 1000));
     
     var initialTime = window.localStorage.getItem("initialTime")
-    var totalTime = roundDecimal(initialTime*1+timeDeltekDelta);
+    var totalTime = roundDecimal(initialTime*1+hours);
     
     frame = document.getElementById('unitFrame').contentWindow.document;
     frame.getElementById(cell).innerHTML = totalTime;
@@ -115,10 +112,7 @@ function preview()
     }
     var startTime = window.localStorage.getItem("startTime")
     var timeDiff = d.getTime()-startTime;
-    var hours = timeDiff / (60 * 60 * 1000);
-    var minutes = (timeDiff % (60 * 60 * 1000))/ (60 * 1000);
-    var deltekMinutes = roundDecimal(minutes);
-    var timeDeltekDelta = hours + deltekMinutes;
+    var hours = roundDecimal(timeDiff / (60 * 60 * 1000));
     
     var initialTime = window.localStorage.getItem("initialTime")
     var previewTime = initialTime+"+"+roundDecimal(timeDeltekDelta);
