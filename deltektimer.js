@@ -42,7 +42,6 @@ function init() {
 
 function updateTimer(cell)
 {
-    alert("Starting Timer")
     stopCurrentTimer()
     startTimer(cell)
     resetButtons()
