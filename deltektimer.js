@@ -115,7 +115,7 @@ function preview()
     var hours = roundDecimal(timeDiff / (60 * 60 * 1000));
     
     var initialTime = window.localStorage.getItem("initialTime")
-    var previewTime = initialTime+"+"+roundDecimal(timeDeltekDelta);
+    var previewTime = initialTime+"+"+roundDecimal(hours);
     
     frame = document.getElementById('unitFrame').contentWindow.document;
     frame.getElementById(cell).innerHTML = previewTime;
