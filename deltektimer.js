@@ -16,6 +16,7 @@ function resetButtons()
         b.classList.add('buttons');
         b.onclick = function() { updateTimer(cell) }
         cell.appendChild(b)
+        cell.onclick = null;
     });
     
     var cellid = window.localStorage.getItem("cell");
@@ -64,7 +65,14 @@ function stopCurrentTimer()
     var totalTime = roundDecimal(initialTime*1+hours);
     
     frame = document.getElementById('unitFrame').contentWindow.document;
-    frame.getElementById(cell).innerHTML = totalTime;
+    
+    // This is part of delteks javascript.
+    submitActive = document.getElementById('unitFrame').contentWindow.submitActive;
+    document.getElementById('unitFrame').contentWindow.hideEditor = function () {};
+    editor = frame.getElementById('editor')
+    editor.currentCell = frame.getElementById(cell);
+    editor.value = totalTime
+    submitActive()
     cancelTimers()
 }
 
