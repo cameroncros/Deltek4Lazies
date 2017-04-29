@@ -8,6 +8,12 @@ function resetButtons()
         button.parentNode.removeChild(button);
     });
     
+    buttons = frame.getElementsByClassName("edit");
+    Array.prototype.slice.call(buttons).forEach(function (button) 
+    {
+        button.parentNode.removeChild(button);
+    });
+    
     cells = frame.getElementsByClassName("d");
     Array.prototype.slice.call(cells).forEach(function (cell) 
     {
@@ -16,6 +22,13 @@ function resetButtons()
         b.classList.add('buttons');
         b.onclick = function() { updateTimer(cell) }
         cell.appendChild(b)
+        
+        var b = document.createElement('span');
+        b.innerHTML = '\u270D'
+        b.classList.add('edit');
+        b.onclick = function() { editCell(cell) }
+        cell.appendChild(b)
+        
         cell.onclick = null;
     });
     
@@ -49,6 +62,27 @@ function updateTimer(cell)
     changeButton(cell)
 }
 
+function saveCell(cellid, value)
+{
+    frame = document.getElementById('unitFrame').contentWindow.document;
+    // This is part of delteks javascript.
+    submitActive = document.getElementById('unitFrame').contentWindow.submitActive;
+    document.getElementById('unitFrame').contentWindow.hideEditor = function () {};
+    editor = frame.getElementById('editor')
+    editor.currentCell = frame.getElementById(cellid);
+    editor.value = value
+    submitActive() 
+}
+
+function editCell(cell)
+{
+    value = cell.innerHTML.replace(/[^\d.-]/g, '')
+    newval = window.prompt("Set Time:", value)
+    debugger;
+    saveCell(cell.id, newval)
+    resetButtons()
+}
+
 function stopCurrentTimer()
 {
     var d = new Date();
@@ -64,15 +98,8 @@ function stopCurrentTimer()
     var initialTime = window.localStorage.getItem("initialTime")
     var totalTime = roundDecimal(initialTime*1+hours);
     
-    frame = document.getElementById('unitFrame').contentWindow.document;
+    saveCell(cell, totalTime)
     
-    // This is part of delteks javascript.
-    submitActive = document.getElementById('unitFrame').contentWindow.submitActive;
-    document.getElementById('unitFrame').contentWindow.hideEditor = function () {};
-    editor = frame.getElementById('editor')
-    editor.currentCell = frame.getElementById(cell);
-    editor.value = totalTime
-    submitActive()
     cancelTimers()
 }
 
@@ -98,16 +125,12 @@ function startTimer(cell)
 
 function changeButton(cell)
 {
-    var button = cell.getElementsByClassName("buttons")[0];
-    button.parentNode.removeChild(button);
-    var b = document.createElement('span');
+    var b = cell.getElementsByClassName("buttons")[0];
     b.innerHTML = '\u23F9'
-    b.classList.add('buttons');
     b.onclick = function() { 
         stopCurrentTimer(cell);
         resetButtons();
     }
-    cell.appendChild(b)
 }
 
 function preview()
