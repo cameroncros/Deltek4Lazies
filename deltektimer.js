@@ -24,7 +24,7 @@ function resetButtons()
         cell.appendChild(b)
         
         var b = document.createElement('span');
-        b.innerHTML = '\u270D'
+        b.innerHTML = '\u270E'
         b.classList.add('edit');
         b.onclick = function() { editCell(cell) }
         cell.appendChild(b)
